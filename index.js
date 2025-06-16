@@ -13,7 +13,5 @@ app.post('/api/sort-string', (req, res) => {
   const sorted = data.split('').sort();
   res.json({ word: sorted });
 });
-
-// 👇 This line is very important for Vercel
 module.exports = app;
 
