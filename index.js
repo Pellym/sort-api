@@ -1,17 +1,14 @@
-const express = require('express');
-const app = express();
+module.exports = (req, res) => {
+  if (req.method === 'POST') {
+    const { data } = req.body;
 
-app.use(express.json());
+    if (typeof data !== 'string') {
+      return res.status(400).json({ error: 'Invalid input' });
+    }
 
-app.post('/api/sort-string', (req, res) => {
-  const { data } = req.body;
-
-  if (typeof data !== 'string') {
-    return res.status(400).json({ error: 'Invalid input' });
+    const sorted = data.split('').sort();
+    return res.status(200).json({ word: sorted });
   }
 
-  const sorted = data.split('').sort();
-  res.json({ word: sorted });
-});
-module.exports = app;
-
+  res.status(405).json({ error: 'Only POST requests are allowed' });
+};
