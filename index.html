@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>String Sorter</title>
+</head>
+<body>
+  <h1>Test String Sorting API</h1>
+  <form id="testForm">
+    <label>Email: <input type="email" id="email" required></label><br>
+    <label>API URL: <input type="url" id="apiUrl" required></label><br>
+    <label>String to Sort: <input type="text" id="inputString" required></label><br>
+    <button type="submit">Test</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('testForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const apiUrl = document.getElementById('apiUrl').value;
+      const inputString = document.getElementById('inputString').value;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: inputString })
+        });
+        const data = await response.json();
+        document.getElementById('result').innerHTML = `
+          <h3>Result:</h3>
+          <pre>${JSON.stringify(data, null, 2)}</pre>
+        `;
+      } catch (error) {
+        document.getElementById('result').innerHTML = `Error: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
